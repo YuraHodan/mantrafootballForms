@@ -15,6 +15,11 @@ const formations = {
 const team = [];
 
 function getMissingPlayers (teamComposition) {
+    const sortTeamComposition = teamComposition.sort((a,b) => {
+        const aHasExt = a.indexOf("/") > -1;
+        const bHasExt = b.indexOf("/") > -1;
+        return aHasExt - bHasExt;
+    })
     const missingPlayers = {};
 
     for (let formation in formations) {
@@ -23,7 +28,7 @@ function getMissingPlayers (teamComposition) {
             nonAlternativePositions: []
         };
         const positions = formations[formation];
-        const players = [...teamComposition];
+        const players = [...sortTeamComposition];
         for (let position of positions) {
             const possiblePositions = position.split('/');
             let found = false;
@@ -37,7 +42,7 @@ function getMissingPlayers (teamComposition) {
             }
             if (!found) {
                 let missingPosition = possiblePositions[0];
-                let player = teamComposition.find(playerPosition => playerPosition.includes(missingPosition));
+                let player = sortTeamComposition.find(playerPosition => playerPosition.includes(missingPosition));
                 if (player) {
                     const possiblePositions = [];
 
@@ -116,7 +121,6 @@ $(document).ready(function() {
             const selectedValue = $(this).val();
             team[selectedId] = selectedValue;
             const result = Object.values(team).map(item => item);
-            console.log(result)
             test(getMissingPlayers(result));
         });
 
