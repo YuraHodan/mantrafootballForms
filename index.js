@@ -14,66 +14,55 @@ const formations = {
 
 const team = [];
 
-function getMissingPlayers (teamComposition) {
-    const sortTeamComposition = teamComposition.sort((a,b) => {
+
+function getFilledFormations(teamComposition) {
+    const sortTeamComposition = teamComposition.sort((a, b) => {
         const aHasExt = a.indexOf("/") > -1;
         const bHasExt = b.indexOf("/") > -1;
         return aHasExt - bHasExt;
-    })
-    const missingPlayers = {};
+    });
+
+    const filledFormations = {};
 
     for (let formation in formations) {
-        missingPlayers[formation] = {
-            variablePositions: [],
-            nonAlternativePositions: []
-        };
+        filledFormations[formation] = false;
         const positions = formations[formation];
         const players = [...sortTeamComposition];
+        let allPositionsFilled = true;
+
         for (let position of positions) {
             const possiblePositions = position.split('/');
             let found = false;
+
             for (let i = 0; i < possiblePositions.length; i++) {
                 const playerPositions = players.filter(playerPosition => playerPosition.includes(possiblePositions[i]));
+
                 if (playerPositions.length > 0) {
                     players.splice(players.indexOf(playerPositions[0]), 1);
                     found = true;
                     break;
                 }
             }
+
             if (!found) {
+                allPositionsFilled = false;
+
                 let missingPosition = possiblePositions[0];
                 let player = sortTeamComposition.find(playerPosition => playerPosition.includes(missingPosition));
-                if (player) {
-                    const possiblePositions = [];
 
-                    positions.forEach((position) => {
-                        const positionList = position.split('/');
-                        if (positionList.some((pos) => player.split('/').includes(pos))) {
-                            if (!possiblePositions.includes(position)) {
-                                possiblePositions.push(position);
-                            }
-                        }
-                    });
-                    if (possiblePositions.length === 1) {
-                        missingPlayers[formation].nonAlternativePositions.push(possiblePositions[0]);
-                    } else {
-                        const positions = possiblePositions.flatMap(position => position.split('/'));
-                        const uniquePositions = positions.filter((position, index) => positions.indexOf(position) === index);
-                        missingPlayers[formation].variablePositions.push(...uniquePositions);
-                    }
-                } else {
-                    missingPlayers[formation].nonAlternativePositions.push(missingPosition);
+                if (!player) {
+                    allPositionsFilled = false;
+                    break;
                 }
             }
-            missingPlayers[formation].variablePositions = missingPlayers[formation].variablePositions.filter(position => !missingPlayers[formation].nonAlternativePositions.includes(position));
-            const formationPositions = positions.flatMap(position => position.split('/'));
-            missingPlayers[formation].variablePositions = missingPlayers[formation].variablePositions.filter(position => formationPositions.includes(position));
-            missingPlayers[formation].variablePositions.filter(position => formationPositions.some(fp => fp.includes(position)));
         }
+
+        filledFormations[formation] = allPositionsFilled;
     }
 
-    return missingPlayers;
+    return filledFormations;
 }
+
 
 
 
@@ -121,7 +110,7 @@ $(document).ready(function() {
             const selectedValue = $(this).val();
             team[selectedId] = selectedValue;
             const result = Object.values(team).map(item => item);
-            test(getMissingPlayers(result));
+            show(getFilledFormations(result));
         });
 
         options.forEach((option) => {
@@ -135,16 +124,29 @@ $(document).ready(function() {
     }
 
 
-    function test(formations) {
-        $('#formations-table').empty();
-        for (let key in formations) {
-            const value = formations[key];
-            const variablePositions = value.variablePositions.join(', ');
-            const nonAlternativePositions = value.nonAlternativePositions.join(', ');
-            $('#formations-table').append(`<tr><td>${key} - </td><td>variable Positions - ${variablePositions}</td><td>non-alternative positions - ${nonAlternativePositions}</td></tr>`);
+    function show(testFormations) {
+        const $formationsContainer = $('#formations-container');
+        $formationsContainer.empty();
+
+        for (let key in testFormations) {
+            const value = testFormations[key];
+            console.log(formations[key])
+
+            const $formationBlock = $('<div>').addClass('formation-block');
+            const $formationName = $('<div>').text(key + ' : ' + formations[key]).addClass('formation-name');
+
+            if (value) {
+                $formationBlock.addClass('green-bg');
+            } else {
+                $formationBlock.addClass('red-bg');
+            }
+
+            $formationBlock.append($formationName);
+            $formationsContainer.append($formationBlock);
         }
-    };
+    }
 });
+
 
 
 
