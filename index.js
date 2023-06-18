@@ -35,8 +35,10 @@ function getFilledFormations(teamComposition) {
             let found = false;
 
             for (let i = 0; i < possiblePositions.length; i++) {
-                const playerPositions = players.filter(playerPosition => playerPosition.includes(possiblePositions[i]));
-
+                const playerPositions = players.filter(playerPosition => {
+                    const positionRegex = new RegExp(`\\b${possiblePositions[i]}\\b`);
+                    return positionRegex.test(playerPosition);
+                });
                 if (playerPositions.length > 0) {
                     players.splice(players.indexOf(playerPositions[0]), 1);
                     found = true;
@@ -62,6 +64,7 @@ function getFilledFormations(teamComposition) {
 
     return filledFormations;
 }
+
 
 
 
@@ -110,7 +113,7 @@ $(document).ready(function() {
             const selectedValue = $(this).val();
             team[selectedId] = selectedValue;
             const result = Object.values(team).map(item => item);
-            show(getFilledFormations(result));
+            show(getFilledFormations(result), result);
         });
 
         options.forEach((option) => {
@@ -124,13 +127,12 @@ $(document).ready(function() {
     }
 
 
-    function show(testFormations) {
+    function show(testFormations, result) {
         const $formationsContainer = $('#formations-container');
         $formationsContainer.empty();
 
         for (let key in testFormations) {
             const value = testFormations[key];
-            console.log(formations[key])
 
             const $formationBlock = $('<div>').addClass('formation-block');
             const $formationName = $('<div>').text(key + ' : ' + formations[key]).addClass('formation-name');
@@ -144,6 +146,8 @@ $(document).ready(function() {
             $formationBlock.append($formationName);
             $formationsContainer.append($formationBlock);
         }
+
+        $("#result").text('[' + result + ']');
     }
 });
 
