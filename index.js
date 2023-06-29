@@ -1,19 +1,86 @@
 const formations = {
-    f343: ['cb', 'cb', 'cb', 'wb', 'wb', 'dm/cm', 'cm', 'w/fw', 'w/fw', 'fw/st' ],
-    f3412: ['cb', 'cb', 'cb', 'wb', 'wb', 'dm/cm', 'cm', 'am', 'fw/st', 'fw/st' ],
-    f3421: ['cb', 'cb', 'cb', 'wb', 'wb/w', 'dm/cm', 'dm', 'am', 'am/fw', 'fw/st' ],
-    f352: ['cb', 'cb', 'cb', 'wb', 'dm', 'dm/cm', 'cm', 'wb/w', 'fw/st', 'fw/st' ],
-    f3511: ['cb', 'cb', 'cb', 'wb/w', 'dm', 'dm', 'cm', 'wb/w', 'am/fw', 'fw/st' ],
-    f433: ['cb', 'cb', 'lb', 'rb', 'dm', 'dm/cm', 'cm', 'w/fw', 'w/fw', 'fw/st' ],
-    f4312: ['cb', 'cb', 'lb', 'rb', 'dm', 'dm/cm', 'cm', 'am', 'fw/st', 'fw/st' ],
-    f442: ['cb', 'cb', 'lb', 'rb', 'wb', 'dm/cm', 'cm', 'wb/w', 'fw/st', 'fw/st' ],
-    f4141: ['cb', 'cb', 'lb', 'rb', 'dm', 'wb/w', 'cm/am', 'am', 'w', 'fw/st' ],
-    f4411: ['cb', 'cb', 'lb', 'rb', 'dm', 'wb/w', 'cm', 'wb/w', 'am/fw', 'fw/st' ],
-    f4231: ['cb', 'cb', 'lb', 'rb', 'dm', 'dm/cm', 'w/am', 'am', 'fw', 'fw/st' ],
+    f343: {
+        lineUp: ['cb', 'cb', 'cb', 'wb', 'wb', 'dm/cm', 'cm', 'w/fw', 'w/fw', 'fw/st' ],
+        lineUpWithReserve: ['cb', 'cb', 'cb', 'wb', 'wb', 'dm/cm', 'cm', 'w/fw', 'w/fw', 'fw/st' , 'cb', 'cb', 'cb', 'wb', 'wb', 'dm/cm', 'cm', 'w/fw', 'w/fw', 'fw/st'],
+    },
+    f3412: {
+        lineUp: ['cb', 'cb', 'cb', 'wb', 'wb', 'dm/cm', 'cm', 'am', 'fw/st', 'fw/st' ],
+        lineUpWithReserve: ['cb', 'cb', 'cb', 'wb', 'wb', 'dm/cm', 'cm', 'am', 'fw/st', 'fw/st', 'cb', 'cb', 'cb', 'wb', 'wb', 'dm/cm', 'cm', 'am', 'fw/st', 'fw/st' ],
+    },
+    f3412: {
+        lineUp: ['cb', 'cb', 'cb', 'wb', 'wb/w', 'dm/cm', 'dm', 'am', 'am/fw', 'fw/st' ],
+        lineUpWithReserve: ['cb', 'cb', 'cb', 'wb', 'wb/w', 'dm/cm', 'dm', 'am', 'am/fw', 'fw/st' , 'cb', 'cb', 'cb', 'wb', 'wb/w', 'dm/cm', 'dm', 'am', 'am/fw', 'fw/st']
+    },
+    f352: {
+        lineUp: ['cb', 'cb', 'cb', 'wb', 'dm', 'dm/cm', 'cm', 'wb/w', 'fw/st', 'fw/st' ] ,
+        lineUpWithReserve: ['cb', 'cb', 'cb', 'wb', 'dm', 'dm/cm', 'cm', 'wb/w', 'fw/st', 'fw/st' , 'cb', 'cb', 'cb', 'wb', 'dm', 'dm/cm', 'cm', 'wb/w', 'fw/st', 'fw/st' ]
+    },
+    f3511: {
+        lineUp: ['cb', 'cb', 'cb', 'wb/w', 'dm', 'dm', 'cm', 'wb/w', 'am/fw', 'fw/st' ],
+        lineUpWithReserve: ['cb', 'cb', 'cb', 'wb/w', 'dm', 'dm', 'cm', 'wb/w', 'am/fw', 'fw/st', 'cb', 'cb', 'cb', 'wb/w', 'dm', 'dm', 'cm', 'wb/w', 'am/fw', 'fw/st' ]
+    },
+    f433: {
+        lineUp: ['cb', 'cb', 'lb', 'rb', 'dm', 'dm/cm', 'cm', 'w/fw', 'w/fw', 'fw/st' ],
+        lineUpWithReserve: ['cb', 'cb', 'lb', 'rb', 'dm', 'dm/cm', 'cm', 'w/fw', 'w/fw', 'fw/st', 'cb', 'cb', 'lb', 'rb', 'dm', 'dm/cm', 'cm', 'w/fw', 'w/fw', 'fw/st' ]
+    },
+    f4312: {
+        lineUp: ['cb', 'cb', 'lb', 'rb', 'dm', 'dm/cm', 'cm', 'am', 'fw/st', 'fw/st' ],
+        lineUpWithReserve: ['cb', 'cb', 'lb', 'rb', 'dm', 'dm/cm', 'cm', 'am', 'fw/st', 'fw/st', 'cb', 'cb', 'lb', 'rb', 'dm', 'dm/cm', 'cm', 'am', 'fw/st', 'fw/st' ]
+    },
+    f442: {
+        lineUp: ['cb', 'cb', 'lb', 'rb', 'wb', 'dm/cm', 'cm', 'wb/w', 'fw/st', 'fw/st'],
+        lineUpWithReserve: ['cb', 'cb', 'lb', 'rb', 'wb', 'dm/cm', 'cm', 'wb/w', 'fw/st', 'fw/st', 'cb', 'cb', 'lb', 'rb', 'wb', 'dm/cm', 'cm', 'wb/w', 'fw/st', 'fw/st']
+    },
+    f4141: {
+        lineUp: ['cb', 'cb', 'lb', 'rb', 'dm', 'wb/w', 'cm/am', 'am', 'w', 'fw/st'],
+        lineUpWithReserve: ['cb', 'cb', 'lb', 'rb', 'dm', 'wb/w', 'cm/am', 'am', 'w', 'fw/st', 'cb', 'cb', 'lb', 'rb', 'dm', 'wb/w', 'cm/am', 'am', 'w', 'fw/st']
+    },
+    f4411: {
+        lineUp: ['cb', 'cb', 'lb', 'rb', 'dm', 'wb/w', 'cm', 'wb/w', 'am/fw', 'fw/st'],
+        lineUpWithReserve: ['cb', 'cb', 'lb', 'rb', 'dm', 'wb/w', 'cm', 'wb/w', 'am/fw', 'fw/st', 'cb', 'cb', 'lb', 'rb', 'dm', 'wb/w', 'cm', 'wb/w', 'am/fw', 'fw/st']
+    },
+    f4231: {
+        lineUp: ['cb', 'cb', 'lb', 'rb', 'dm', 'dm/cm', 'w/am', 'am', 'fw', 'fw/st'],
+        lineUpWithReserve: ['cb', 'cb', 'lb', 'rb', 'dm', 'dm/cm', 'w/am', 'am', 'fw', 'fw/st', 'cb', 'cb', 'lb', 'rb', 'dm', 'dm/cm', 'w/am', 'am', 'fw', 'fw/st']
+    },
 };
 
 const team = [];
 
+function isLineUpFilled(lineUp, players) {
+    let allPositionsFilled = true;
+
+    for (let position of lineUp) {
+        const possiblePositions = position.split('/');
+        let found = false;
+
+        for (let i = 0; i < possiblePositions.length; i++) {
+            const playerPositions = players.filter(playerPosition => {
+                const positionRegex = new RegExp(`\\b${possiblePositions[i]}\\b`);
+                return positionRegex.test(playerPosition);
+            });
+
+            if (playerPositions.length > 0) {
+                players.splice(players.indexOf(playerPositions[0]), 1);
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            allPositionsFilled = false;
+            let missingPosition = possiblePositions[0];
+            let player = players.find(playerPosition => playerPosition.includes(missingPosition));
+
+            if (!player) {
+                allPositionsFilled = false;
+                break;
+            }
+        }
+    }
+
+    return allPositionsFilled;
+}
 
 function getFilledFormations(teamComposition) {
     const sortTeamComposition = teamComposition.sort((a, b) => {
@@ -25,46 +92,14 @@ function getFilledFormations(teamComposition) {
     const filledFormations = {};
 
     for (let formation in formations) {
-        filledFormations[formation] = false;
-        const positions = formations[formation];
-        const players = [...sortTeamComposition];
-        let allPositionsFilled = true;
-
-        for (let position of positions) {
-            const possiblePositions = position.split('/');
-            let found = false;
-
-            for (let i = 0; i < possiblePositions.length; i++) {
-                const playerPositions = players.filter(playerPosition => {
-                    const positionRegex = new RegExp(`\\b${possiblePositions[i]}\\b`);
-                    return positionRegex.test(playerPosition);
-                });
-                if (playerPositions.length > 0) {
-                    players.splice(players.indexOf(playerPositions[0]), 1);
-                    found = true;
-                    break;
-                }
-            }
-
-            if (!found) {
-                allPositionsFilled = false;
-
-                let missingPosition = possiblePositions[0];
-                let player = sortTeamComposition.find(playerPosition => playerPosition.includes(missingPosition));
-
-                if (!player) {
-                    allPositionsFilled = false;
-                    break;
-                }
-            }
-        }
-
-        filledFormations[formation] = allPositionsFilled;
+        filledFormations[formation] = {
+            lineUp: isLineUpFilled(formations[formation].lineUp, [...sortTeamComposition]),
+            lineUpWithReserve: isLineUpFilled(formations[formation].lineUpWithReserve, [...sortTeamComposition])
+        };
     }
 
     return filledFormations;
 }
-
 
 
 
@@ -135,10 +170,12 @@ $(document).ready(function() {
             const value = testFormations[key];
 
             const $formationBlock = $('<div>').addClass('formation-block');
-            const $formationName = $('<div>').text(key + ' : ' + formations[key]).addClass('formation-name');
+            const $formationName = $('<div>').text(key + ' : ' + formations[key].lineUp).addClass('formation-name');
 
-            if (value) {
+            if (value.lineUp && value.lineUpWithReserve) {
                 $formationBlock.addClass('green-bg');
+            } else if (value.lineUp) {
+                $formationBlock.addClass('yellow-bg');
             } else {
                 $formationBlock.addClass('red-bg');
             }
@@ -147,7 +184,7 @@ $(document).ready(function() {
             $formationsContainer.append($formationBlock);
         }
 
-        $("#result").text('[' + result + ']');
+        $("#result").text('[' + result  + ']');
     }
 });
 
