@@ -7,7 +7,7 @@ const formations = {
         lineUp: ['cb', 'cb', 'cb', 'wb', 'wb', 'dm/cm', 'cm', 'am', 'fw/st', 'fw/st' ],
         lineUpWithReserve: ['cb', 'cb', 'cb', 'wb', 'wb', 'dm/cm', 'cm', 'am', 'fw/st', 'fw/st', 'cb', 'cb', 'cb', 'wb', 'wb', 'dm/cm', 'cm', 'am', 'fw/st', 'fw/st' ],
     },
-    f3412: {
+    f3421: {
         lineUp: ['cb', 'cb', 'cb', 'wb', 'wb/w', 'dm/cm', 'dm', 'am', 'am/fw', 'fw/st' ],
         lineUpWithReserve: ['cb', 'cb', 'cb', 'wb', 'wb/w', 'dm/cm', 'dm', 'am', 'am/fw', 'fw/st' , 'cb', 'cb', 'cb', 'wb', 'wb/w', 'dm/cm', 'dm', 'am', 'am/fw', 'fw/st']
     },
@@ -69,12 +69,16 @@ function isLineUpFilled(lineUp, players) {
 
         if (!found) {
             allPositionsFilled = false;
-            let missingPosition = possiblePositions[0];
-            let player = players.find(playerPosition => playerPosition.includes(missingPosition));
+            for (let i = 0; i < possiblePositions.length; i++) {
+                const player = players.filter(playerPosition => {
+                    const positionRegex = new RegExp(`\\b${possiblePositions[i]}\\b`);
+                    return positionRegex.test(playerPosition);
+                });
 
-            if (!player) {
-                allPositionsFilled = false;
-                break;
+                if (!player) {
+                    allPositionsFilled = false;
+                    break;
+                }
             }
         }
     }
@@ -103,7 +107,6 @@ function getFilledFormations(teamComposition) {
 
 
 
-
 $(document).ready(function() {
     const options = [
         {text: "Оберіть позицію"},
@@ -122,6 +125,7 @@ $(document).ready(function() {
         {value: "cb/lb/wb", text: "CB/LB/Wb"},
         {value: "cb/rb/wb", text: "CB/RB/Wb"},
         {value: "lb/rb/wb", text: "LB/RB/WB"},
+        {value: "rb/wb/dm", text: "RB/WB/DM (new)"},
         {value: "cb/dm", text: "CB/DM"},
         {value: "rb/wb", text: "RB/Wb"},
         {value: "lb/wb", text: "LB/WB"},
